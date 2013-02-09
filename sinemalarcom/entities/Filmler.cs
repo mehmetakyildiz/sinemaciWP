@@ -5,6 +5,8 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using sinemaci.serviceAccess.APIAccess;
+using sinemaci.serviceAccess;
 
 namespace sinemaci.entities
 {
@@ -21,9 +23,9 @@ namespace sinemaci.entities
 
         public void get()
         {
-            sinemaci.APIAccess.GetRequest<RootObject> Req = new APIAccess.GetRequest<RootObject>();
+            GetRequest<RootObject> Req = new GetRequest<RootObject>();
             Req.Completed += Req_Completed;
-            Req.Download(APIAccess.APIuris.Filmler);
+            Req.Download(APIuris.Filmler);
         }
 
         void Req_Completed(Filmler.RootObject deserialized)

@@ -5,6 +5,8 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using sinemaci.serviceAccess.APIAccess;
+using sinemaci.serviceAccess;
 
 namespace sinemaci.entities
 {
@@ -19,9 +21,9 @@ namespace sinemaci.entities
 
         public void get(double lat, double lng)
         {
-            APIAccess.GetRequest<RootObject> Req = new APIAccess.GetRequest<RootObject>();
+            GetRequest<RootObject> Req = new GetRequest<RootObject>();
             Req.Completed += Req_Completed;
-            Req.Download(APIAccess.APIuris.Salonlar_ByGPS, lat.ToString(), lng.ToString());
+            Req.Download(APIuris.Salonlar_ByGPS, lat.ToString(), lng.ToString());
         }
         
         void Req_Completed(Salonlar.RootObject deserialized)

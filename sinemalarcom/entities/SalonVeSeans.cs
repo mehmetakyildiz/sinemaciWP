@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using sinemaci.serviceAccess.APIAccess;
+using sinemaci.serviceAccess;
 
 namespace sinemaci.entities
 {
@@ -16,18 +18,18 @@ namespace sinemaci.entities
         public void get(double lat, double lng, string FilmID)
         {
             filmID = FilmID;
-            APIAccess.GetRequest<NearestCinema_RootObject> Req = new APIAccess.GetRequest<NearestCinema_RootObject>();
+            GetRequest<NearestCinema_RootObject> Req = new GetRequest<NearestCinema_RootObject>();
             Req.Completed +=NearestCinema_Req_Completed;
-            Req.Download(APIAccess.APIuris.TekSalon_byGPS_byMovieID, lat.ToString(), lng.ToString(), FilmID);
+            Req.Download(APIuris.TekSalon_byGPS_byMovieID, lat.ToString(), lng.ToString(), FilmID);
         }
 
         void NearestCinema_Req_Completed(SalonVeSeans.NearestCinema_RootObject data)
         {
             EnYakinSalon = data;
 
-            APIAccess.GetRequest<RootObject> Req = new APIAccess.GetRequest<RootObject>();
+            GetRequest<RootObject> Req = new GetRequest<RootObject>();
             Req.Completed += Req_Completed;
-            Req.Download(APIAccess.APIuris.SalonlarVeSeanslar_byCity_byMovieID, data.cinema.cityId, filmID);
+            Req.Download(APIuris.SalonlarVeSeanslar_byCity_byMovieID, data.cinema.cityId, filmID);
         }
 
         void Req_Completed(SalonVeSeans.RootObject data)

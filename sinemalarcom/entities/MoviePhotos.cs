@@ -5,6 +5,8 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using sinemaci.serviceAccess.APIAccess;
+using sinemaci.serviceAccess;
 
 namespace sinemaci.entities
 {
@@ -19,10 +21,10 @@ namespace sinemaci.entities
 
         public void get(string MovieID)
         {
-            APIAccess.GetRequest<string[]> Req = new APIAccess.GetRequest<string[]>();
+            GetRequest<string[]> Req = new GetRequest<string[]>();
             Req.Error += Req_Error;
             Req.Completed += Req_Completed;
-            Req.Download(APIAccess.APIuris.MoviePhotos_byID, MovieID);
+            Req.Download(APIuris.MoviePhotos_byID, MovieID);
         }
 
         void Req_Error()

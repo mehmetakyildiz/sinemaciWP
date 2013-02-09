@@ -101,8 +101,10 @@
       <DependentUpon>asyncImage.xaml</DependentUpon>
     </Compile>
     <Compile Include="controls\TimeToOpacityConverter.cs" />
-    <Compile Include="entities\APIAccess.cs" />
+    <Compile Include="serviceAccess\APIAccess.cs" />
     <Compile Include="entities\ArtistPhotos.cs" />
+    <Compile Include="serviceAccess\APIUris.cs" />
+    <Compile Include="serviceAccess\CacheStore.cs" />
     <Compile Include="entities\MoviePhotos.cs" />
     <Compile Include="entities\Film.cs" />
     <Compile Include="entities\Reklam.cs" />

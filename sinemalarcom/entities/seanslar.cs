@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using sinemaci.serviceAccess.APIAccess;
+using sinemaci.serviceAccess;
 
 namespace sinemaci.entities
 {
@@ -12,9 +14,9 @@ namespace sinemaci.entities
 
         public void get(string SalonID)
         {
-            APIAccess.GetRequest<List<RootObject>> Req = new APIAccess.GetRequest<List<RootObject>>();
+            GetRequest<List<RootObject>> Req = new GetRequest<List<RootObject>>();
             Req.Completed += Req_Completed;
-            Req.Download(APIAccess.APIuris.Seanslar_bySalon, SalonID);
+            Req.Download(APIuris.Seanslar_bySalon, SalonID);
         }
 
         void Req_Completed(List<seanslar.RootObject> data)

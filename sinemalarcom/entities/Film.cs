@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using sinemaci.serviceAccess.APIAccess;
+using sinemaci.serviceAccess;
 
 namespace sinemaci.entities
 {
@@ -12,9 +14,9 @@ namespace sinemaci.entities
 
         public void get(string ID)
         {
-            sinemaci.APIAccess.GetRequest<RootObject> Req = new APIAccess.GetRequest<RootObject>();
+            GetRequest<RootObject> Req = new GetRequest<RootObject>();
             Req.Completed += Req_Completed;
-            Req.Download(APIAccess.APIuris.FilmByID, ID);
+            Req.Download(APIuris.FilmByID, ID);
         }
 
         void Req_Completed(Film.RootObject deserialized)
