@@ -1,0 +1,50 @@
+﻿<UserControl x:Class="sinemaci.pinpoint_me"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    d:DesignHeight="136" d:DesignWidth="119">
+	<UserControl.Resources>
+		<Storyboard x:Name="anim_Accuracy">
+			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.Rotation)" Storyboard.TargetName="ellipse_Accuracy" RepeatBehavior="Forever">
+				<EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+				<EasingDoubleKeyFrame KeyTime="0:0:1" Value="360"/>
+			</DoubleAnimationUsingKeyFrames>
+		</Storyboard>
+		<Storyboard x:Name="anim_AccuracyResize">
+			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleX)" Storyboard.TargetName="ellipse_Accuracy">
+				<EasingDoubleKeyFrame KeyTime="0:0:1" x:Name="anim_AccuracyValue1" Value="1.1">
+					<EasingDoubleKeyFrame.EasingFunction>
+						<BackEase EasingMode="EaseOut"/>
+					</EasingDoubleKeyFrame.EasingFunction>
+				</EasingDoubleKeyFrame>
+			</DoubleAnimationUsingKeyFrames>
+			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleY)" Storyboard.TargetName="ellipse_Accuracy">
+                <EasingDoubleKeyFrame KeyTime="0:0:1" x:Name="anim_AccuracyValue2" Value="1.1">
+					<EasingDoubleKeyFrame.EasingFunction>
+						<BackEase EasingMode="EaseOut"/>
+					</EasingDoubleKeyFrame.EasingFunction>
+				</EasingDoubleKeyFrame>
+			</DoubleAnimationUsingKeyFrames>
+		</Storyboard>
+	</UserControl.Resources>
+    
+    <Grid x:Name="LayoutRoot">
+    	<Ellipse x:Name="ellipse_Accuracy" Fill="#FFD3DDFF" HorizontalAlignment="Left" Height="100" VerticalAlignment="Top" Width="100" Margin="-50,-50,0,0" RenderTransformOrigin="0.5,0.5" Opacity="0.6">
+    		<Ellipse.RenderTransform>
+    			<CompositeTransform/>
+    		</Ellipse.RenderTransform>
+    		<Ellipse.Stroke>
+    			<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+    				<GradientStop Color="#FF325CA5" Offset="0"/>
+    				<GradientStop Color="White" Offset="1"/>
+    			</LinearGradientBrush>
+    		</Ellipse.Stroke>
+    	</Ellipse>
+    	<Image Source="/Assets/appbaricons/mappin_me.png" Stretch="None" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="-38,-41,0,0"/>
+    </Grid>
+</UserControl>

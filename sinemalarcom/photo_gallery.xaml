@@ -1,0 +1,59 @@
+﻿<phone:PhoneApplicationPage
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:Primitives="clr-namespace:Microsoft.Phone.Controls.Primitives;assembly=Microsoft.Phone"
+    xmlns:local="clr-namespace:sinemaci"
+    x:Class="sinemaci.photo_gallery"
+    SupportedOrientations="PortraitOrLandscape" Orientation="Portrait"
+    mc:Ignorable="d"
+    shell:SystemTray.IsVisible="True">
+	<phone:PhoneApplicationPage.Resources>
+		<Style x:Key="PivotStyle1" TargetType="phone:Pivot">
+			<Setter Property="Margin" Value="0"/>
+			<Setter Property="Padding" Value="0"/>
+			<Setter Property="Foreground" Value="{StaticResource PhoneForegroundBrush}"/>
+			<Setter Property="Background" Value="Transparent"/>
+			<Setter Property="ItemsPanel">
+				<Setter.Value>
+					<ItemsPanelTemplate>
+						<Grid/>
+					</ItemsPanelTemplate>
+				</Setter.Value>
+			</Setter>
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="phone:Pivot">
+						<Grid HorizontalAlignment="{TemplateBinding HorizontalAlignment}" VerticalAlignment="{TemplateBinding VerticalAlignment}">
+							<Grid.RowDefinitions>
+								<RowDefinition Height="Auto"/>
+								<RowDefinition Height="Auto"/>
+								<RowDefinition Height="*"/>
+							</Grid.RowDefinitions>
+							<Grid Background="{TemplateBinding Background}" Grid.RowSpan="3"/>
+							<ContentControl ContentTemplate="{TemplateBinding TitleTemplate}" Content="{TemplateBinding Title}" HorizontalAlignment="Left" Margin="24,17,0,-7" Style="{StaticResource PivotTitleStyle}" Visibility="Collapsed" Height="0" d:IsHidden="True"/>
+							<Primitives:PivotHeadersControl x:Name="HeadersListElement" Grid.Row="1" Opacity="0" Height="0" d:IsHidden="True"/>
+							<ItemsPresenter x:Name="PivotItemPresenter" Margin="{TemplateBinding Padding}" Grid.RowSpan="3"/>
+						</Grid>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+		</Style>
+	</phone:PhoneApplicationPage.Resources>
+
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True" Mode="Minimized" Opacity="1" >
+            <shell:ApplicationBarIconButton  IconUri="/Assets/appbaricons/save.png" Text="kaydet" Click="barbtn_save" />
+            <shell:ApplicationBarIconButton  IconUri="/Assets/appbaricons/share.png" Text="paylaş" Click="barbtn_share" />
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
+
+<!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="{StaticResource AppBackgroundColor}">
+    	<phone:Pivot x:Name="PhotoPivot" Title="pivot" Style="{StaticResource PivotStyle1}"/>
+    	<ProgressBar x:Name="myProgress" Height="10" VerticalAlignment="Top" Foreground="White"/>
+    </Grid>
+</phone:PhoneApplicationPage>

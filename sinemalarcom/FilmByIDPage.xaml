@@ -1,0 +1,288 @@
+﻿<phone:PhoneApplicationPage
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:Primitives="clr-namespace:Microsoft.Phone.Controls.Primitives;assembly=Microsoft.Phone" xmlns:local="clr-namespace:sinemaci"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit" xmlns:controls="clr-namespace:sinemaci.controls"
+    x:Class="sinemaci.FilmByIDPage"
+    SupportedOrientations="Portrait" Orientation="Portrait"
+    mc:Ignorable="d"
+    shell:SystemTray.IsVisible="True">
+
+	<phone:PhoneApplicationPage.Resources>
+		<ItemsPanelTemplate x:Key="seanslar_ItemsPanelTemplate">
+			<toolkit:WrapPanel FlowDirection="LeftToRight" Width="400" HorizontalAlignment="Left" />
+		</ItemsPanelTemplate>
+		<controls:TimeToOpacityConverter x:Name="TimeOpacityConverter" />
+		<DataTemplate x:Key="seance_ItemTemplate">
+			<Grid>
+				<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Opacity="{Binding Converter={StaticResource TimeOpacityConverter}}" Text="{Binding}" VerticalAlignment="Top" Margin="0,0,10,0"/>
+			</Grid>
+		</DataTemplate>
+		<Style x:Key="sinemalar_itemcontainerstyle" TargetType="ListBoxItem">
+			<Setter Property="Background" Value="Transparent"/>
+			<Setter Property="BorderThickness" Value="0"/>
+			<Setter Property="BorderBrush" Value="Transparent"/>
+			<Setter Property="Padding" Value="0"/>
+			<Setter Property="HorizontalContentAlignment" Value="Left"/>
+			<Setter Property="VerticalContentAlignment" Value="Top"/>
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="ListBoxItem">
+						<Border x:Name="LayoutRoot" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" HorizontalAlignment="{TemplateBinding HorizontalAlignment}" VerticalAlignment="{TemplateBinding VerticalAlignment}">
+							<VisualStateManager.VisualStateGroups>
+								<VisualStateGroup x:Name="CommonStates">
+									<VisualStateGroup.Transitions>
+										<VisualTransition GeneratedDuration="0:0:0.1"/>
+									</VisualStateGroup.Transitions>
+									<VisualState x:Name="Normal"/>
+									<VisualState x:Name="MouseOver">
+										<Storyboard>
+											<DoubleAnimation Duration="0" To="-16" Storyboard.TargetProperty="(UIElement.Projection).(PlaneProjection.RotationY)" Storyboard.TargetName="ContentContainer" d:IsOptimized="True"/>
+											<DoubleAnimation Duration="0" To="-40" Storyboard.TargetProperty="(UIElement.Projection).(PlaneProjection.GlobalOffsetZ)" Storyboard.TargetName="ContentContainer" d:IsOptimized="True"/>
+										</Storyboard>
+									</VisualState>
+									<VisualState x:Name="Disabled">
+										<Storyboard>
+											<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="LayoutRoot">
+												<DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource TransparentBrush}"/>
+											</ObjectAnimationUsingKeyFrames>
+											<DoubleAnimation Duration="0" To=".5" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="ContentContainer"/>
+										</Storyboard>
+									</VisualState>
+								</VisualStateGroup>
+								<VisualStateGroup x:Name="SelectionStates">
+									<VisualState x:Name="Unselected"/>
+									<VisualState x:Name="Selected"/>
+								</VisualStateGroup>
+								<VisualStateGroup x:Name="FocusStates"/>
+							</VisualStateManager.VisualStateGroups>
+							<ContentControl x:Name="ContentContainer" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" Foreground="{TemplateBinding Foreground}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}">
+								<ContentControl.Projection>
+									<PlaneProjection/>
+								</ContentControl.Projection>
+							</ContentControl>
+						</Border>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+		</Style>
+		<Style x:Key="myPanoramaItemStyle" TargetType="phone:PanoramaItem">
+			<Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+			<Setter Property="VerticalContentAlignment" Value="Stretch"/>
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="phone:PanoramaItem">
+						<Grid Background="{TemplateBinding Background}" Margin="12,0,0,0">
+							<Grid.RowDefinitions>
+								<RowDefinition Height="auto"/>
+								<RowDefinition Height="*"/>
+							</Grid.RowDefinitions>
+							<ContentControl x:Name="header" CharacterSpacing="-35" ContentTemplate="{TemplateBinding HeaderTemplate}" Content="{TemplateBinding Header}" FontSize="40" FontFamily="{StaticResource PhoneFontFamilySemiLight}" HorizontalAlignment="Left" Margin="4,-2,0,20">
+								<ContentControl.RenderTransform>
+									<TranslateTransform x:Name="headerTransform"/>
+								</ContentControl.RenderTransform>
+							</ContentControl>
+							<ContentPresenter Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" Grid.Row="1" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+						</Grid>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+		</Style>
+		<DataTemplate x:Key="DataTemplate_yakinSalonlar">
+			<Grid d:DesignWidth="826" d:DesignHeight="265">
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto"/>
+					<RowDefinition/>
+				</Grid.RowDefinitions>
+				<TextBlock TextWrapping="Wrap" Text="{Binding name}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+				<ItemsControl ItemsSource="{Binding allseances}" ItemTemplate="{StaticResource seance_ItemTemplate}" ItemsPanel="{StaticResource seanslar_ItemsPanelTemplate}" Grid.Row="1" Margin="15" />
+			</Grid>
+		</DataTemplate>
+		<ControlTemplate x:Key="myPanoramaTemplate" TargetType="phone:Panorama">
+			<Grid>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="auto"/>
+					<RowDefinition Height="*"/>
+				</Grid.RowDefinitions>
+
+				<Primitives:PanningBackgroundLayer x:Name="BackgroundLayer" Grid.RowSpan="2" HorizontalAlignment="Left">
+					<Border x:Name="background" Background="{TemplateBinding Background}" />
+				</Primitives:PanningBackgroundLayer>
+
+				<Primitives:PanningTitleLayer x:Name="TitleLayer" Grid.Row="0" HorizontalAlignment="Left"  Margin="10,-34,0,0"
+					Content="{TemplateBinding Title}" ContentTemplate="{TemplateBinding TitleTemplate}"
+					FontSize="133.333" FontFamily="{StaticResource PhoneFontFamilyLight}" CharacterSpacing="-35" />
+
+				<Primitives:PanningLayer x:Name="ItemsLayer" Grid.Row="1" HorizontalAlignment="Left">
+					<ItemsPresenter x:Name="items"/>
+				</Primitives:PanningLayer>
+
+			</Grid>
+		</ControlTemplate>
+		<Style x:Key="readony_listbox_itemcontainerstyle" TargetType="ListBoxItem">
+			<Setter Property="Background" Value="Transparent"/>
+			<Setter Property="BorderThickness" Value="0"/>
+			<Setter Property="BorderBrush" Value="Transparent"/>
+			<Setter Property="Padding" Value="0"/>
+			<Setter Property="HorizontalContentAlignment" Value="Left"/>
+			<Setter Property="VerticalContentAlignment" Value="Top"/>
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="ListBoxItem">
+						<Border x:Name="LayoutRoot" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" HorizontalAlignment="{TemplateBinding HorizontalAlignment}" VerticalAlignment="{TemplateBinding VerticalAlignment}">
+							<VisualStateManager.VisualStateGroups>
+								<VisualStateGroup x:Name="CommonStates">
+									<VisualStateGroup.Transitions>
+										<VisualTransition GeneratedDuration="0:0:0.1"/>
+									</VisualStateGroup.Transitions>
+									<VisualState x:Name="Normal"/>
+									<VisualState x:Name="MouseOver"/>
+									<VisualState x:Name="Disabled">
+										<Storyboard>
+											<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="LayoutRoot">
+												<DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource TransparentBrush}"/>
+											</ObjectAnimationUsingKeyFrames>
+											<DoubleAnimation Duration="0" To=".5" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="ContentContainer"/>
+										</Storyboard>
+									</VisualState>
+								</VisualStateGroup>
+								<VisualStateGroup x:Name="SelectionStates">
+									<VisualState x:Name="Unselected"/>
+									<VisualState x:Name="Selected"/>
+								</VisualStateGroup>
+								<VisualStateGroup x:Name="FocusStates"/>
+							</VisualStateManager.VisualStateGroups>
+							<ContentControl x:Name="ContentContainer" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" Foreground="{TemplateBinding Foreground}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}">
+								<ContentControl.Projection>
+									<PlaneProjection/>
+								</ContentControl.Projection>
+							</ContentControl>
+						</Border>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+		</Style>
+	</phone:PhoneApplicationPage.Resources>
+	<phone:PhoneApplicationPage.FontFamily>
+		<StaticResource ResourceKey="PhoneFontFamilyNormal"/>
+	</phone:PhoneApplicationPage.FontFamily>
+	<phone:PhoneApplicationPage.FontSize>
+		<StaticResource ResourceKey="PhoneFontSizeNormal"/>
+	</phone:PhoneApplicationPage.FontSize>
+	<phone:PhoneApplicationPage.Foreground>
+		<StaticResource ResourceKey="PhoneForegroundBrush"/>
+	</phone:PhoneApplicationPage.Foreground>
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True" Mode="Minimized" Opacity="1" >
+
+            <shell:ApplicationBarIconButton IsEnabled="False" x:Name="barbtn_fragman"  IconUri="/Assets/appbaricons/fragman.png" Text="fragman" Click="barbtn_fragman_click" />
+            <shell:ApplicationBarIconButton IsEnabled="False" x:Name="barbtn_photos"  IconUri="/Assets/appbaricons/photos.png" Text="sahneler" Click="barbtn_photos_click" />
+
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
+
+	<Grid x:Name="LayoutRoot" Background="{StaticResource AppBackgroundColor}">
+		<phone:Panorama x:Name="PanoramaRoot" Title=" " Template="{StaticResource myPanoramaTemplate}" Margin="0">
+			<phone:PanoramaItem x:Name="pItem1" CacheMode="{x:Null}" Header="film hakkında" Style="{StaticResource myPanoramaItemStyle}">
+				<phone:PanoramaItem.RenderTransform>
+					<TranslateTransform/>
+				</phone:PanoramaItem.RenderTransform>
+				<Grid x:Name="film_hakkinda" Margin="5,0,0,0">
+					<Grid.RowDefinitions>
+						<RowDefinition Height="Auto"/>
+						<RowDefinition/>
+					</Grid.RowDefinitions>
+					<local:asyncImage HorizontalAlignment="Left" VerticalAlignment="Top" LoaderColor="White" FullURL="{Binding image}" Width="164" Margin="0,8,0,0"/>
+					<StackPanel Margin="175,5,5,5">
+						<TextBlock TextWrapping="Wrap" Text="{Binding name, FallbackValue=yükleniyor...}" VerticalAlignment="Top"/>
+						<TextBlock TextWrapping="Wrap" Text="{Binding orgName, FallbackValue=yükleniyor...}" VerticalAlignment="Top" FontStyle="Italic"/>
+						<StackPanel Margin="0" Orientation="Horizontal">
+							<TextBlock TextWrapping="Wrap" Text="puan: " Opacity="0.7"/>
+							<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding rating}" VerticalAlignment="Top"/>
+						</StackPanel>
+						<StackPanel Orientation="Horizontal">
+							<TextBlock TextWrapping="Wrap" Text="süre: " Margin="0" Opacity="0.7"/>
+							<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding duration}" VerticalAlignment="Top"/>
+						</StackPanel>
+						<StackPanel Orientation="Horizontal" Height="27">
+							<TextBlock TextWrapping="Wrap" Text="tür: " Margin="0" Opacity="0.7"/>
+							<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding type}" VerticalAlignment="Top"/>
+						</StackPanel>
+						<StackPanel Orientation="Horizontal" Height="27">
+							<TextBlock TextWrapping="Wrap" Text="yönetmen: " Margin="0" Opacity="0.7"/>
+							<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding director}" VerticalAlignment="Top"/>
+						</StackPanel>
+						<StackPanel Orientation="Horizontal" Height="27">
+							<TextBlock TextWrapping="Wrap" Text="yıl: " Margin="0" Opacity="0.7"/>
+							<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding produceYear}" VerticalAlignment="Top"/>
+						</StackPanel>
+					</StackPanel>
+					<ScrollViewer Grid.Row="1" Margin="0,5,0,15">
+						<TextBlock TextWrapping="Wrap" Text="{Binding summary}" Height="323" Width="405" Margin="-13,0,0,0"/>
+					</ScrollViewer>
+				</Grid>
+			</phone:PanoramaItem>
+			<phone:PanoramaItem x:Name="pItem2" CacheMode="{x:Null}" Header="oyuncular" Style="{StaticResource myPanoramaItemStyle}">
+				<phone:PanoramaItem.RenderTransform>
+					<TranslateTransform/>
+				</phone:PanoramaItem.RenderTransform>
+				<ListBox x:Name="listOyuncular" ItemsSource="{Binding Items}" ItemContainerStyle="{StaticResource sinemalar_itemcontainerstyle}">
+					<ListBox.ItemTemplate>
+						<DataTemplate>
+							<Grid Height="150" Width="549">
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="105"/>
+									<ColumnDefinition/>
+								</Grid.ColumnDefinitions>
+								<local:asyncImage HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,10,5,10" FullURL="{Binding image}" LoaderColor="White"/>
+								<StackPanel Grid.Column="1" Margin="10" VerticalAlignment="Center">
+									<TextBlock Text="{Binding nameSurname}" TextTrimming="WordEllipsis"/>
+								</StackPanel>
+								<Rectangle HorizontalAlignment="Right" Grid.Column="1" Width="20">
+									<Rectangle.Fill>
+										<LinearGradientBrush EndPoint="0.85,0.5" StartPoint="0.062,0.5">
+											<GradientStop Color="#00560518" Offset="0"/>
+											<GradientStop Color="#FF560518" Offset="1"/>
+										</LinearGradientBrush>
+									</Rectangle.Fill>
+								</Rectangle>
+							</Grid>
+						</DataTemplate>
+					</ListBox.ItemTemplate>
+				</ListBox>
+			</phone:PanoramaItem>
+			<phone:PanoramaItem x:Name="pItem3" CacheMode="{x:Null}" Header="oynadığı sinemalar" Style="{StaticResource myPanoramaItemStyle}">
+				<phone:PanoramaItem.RenderTransform>
+					<TranslateTransform/>
+				</phone:PanoramaItem.RenderTransform>
+				<Grid>
+					<ListBox x:Name="listSalonlar" ItemsSource="{Binding Items}" ItemTemplate="{StaticResource DataTemplate_yakinSalonlar}" ItemContainerStyle="{StaticResource sinemalar_itemcontainerstyle}" />
+					<ProgressBar x:Name="gpsLoader" Height="10" VerticalAlignment="Top" Margin="0,-13,0,0" IsIndeterminate="True" Foreground="#FFE51400"/>
+				</Grid>
+			</phone:PanoramaItem>
+			<phone:PanoramaItem x:Name="pItem4" CacheMode="{x:Null}" Header="yorumlar" Style="{StaticResource myPanoramaItemStyle}">
+				<phone:PanoramaItem.RenderTransform>
+					<TranslateTransform/>
+				</phone:PanoramaItem.RenderTransform>
+				<ListBox x:Name="listYorumlar" ItemsSource="{Binding Items}" ItemContainerStyle="{StaticResource readony_listbox_itemcontainerstyle}">
+					<ListBox.ItemTemplate>
+						<DataTemplate>
+							<StackPanel d:DesignWidth="570.313" d:DesignHeight="130.23" Margin="0,0,0,10">
+								<TextBlock TextWrapping="Wrap" Text="{Binding addDate, StringFormat=[\{0\}]}" HorizontalAlignment="Left"/>
+								<TextBlock TextWrapping="Wrap" Text="{Binding comment}"/>
+								<TextBlock TextWrapping="Wrap" Text="{Binding username}" FontStyle="Italic" HorizontalAlignment="Left"/>
+							</StackPanel>
+						</DataTemplate>
+					</ListBox.ItemTemplate>
+				</ListBox>
+			</phone:PanoramaItem>
+		</phone:Panorama>
+		<ProgressBar x:Name="loader" Height="10" VerticalAlignment="Top" Foreground="#FFFF1600" IsIndeterminate="True"/>
+	
+    </Grid>
+
+</phone:PhoneApplicationPage>

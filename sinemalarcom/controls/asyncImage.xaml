@@ -1,0 +1,42 @@
+﻿<UserControl
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:es="clr-namespace:Microsoft.Expression.Shapes;assembly=Microsoft.Expression.Drawing" xmlns:em="clr-namespace:Microsoft.Expression.Media;assembly=Microsoft.Expression.Drawing" x:Class="sinemaci.asyncImage"
+    mc:Ignorable="d"
+    d:DesignHeight="480" d:DesignWidth="480">
+    <UserControl.Resources>
+    	<Storyboard x:Key="anim_Loading">
+    		<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[2].(RotateTransform.Angle)" Storyboard.TargetName="ellipse">
+    			<EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+    			<EasingDoubleKeyFrame KeyTime="0:0:1" Value="360"/>
+    		</DoubleAnimationUsingKeyFrames>
+    	</Storyboard>
+    </UserControl.Resources>
+	<UserControl.FontFamily>
+		<StaticResource ResourceKey="PhoneFontFamilyNormal"/>
+	</UserControl.FontFamily>
+	<UserControl.FontSize>
+		<StaticResource ResourceKey="PhoneFontSizeNormal"/>
+	</UserControl.FontSize>
+	<UserControl.Foreground>
+		<StaticResource ResourceKey="PhoneForegroundBrush"/>
+	</UserControl.Foreground>
+    <Grid x:Name="LayoutRoot">
+    	<Image x:Name="ImageToShow"/>
+		<Viewbox Margin="10">
+			<es:Arc x:Name="ellipse" RenderTransformOrigin="0.5,0.5" Height="280" Width="280" ArcThickness="0.25" ArcThicknessUnit="Percent" EndAngle="137" Stretch="None" StartAngle="0" UseLayoutRounding="False" StrokeThickness="0" Stroke="Black" Fill="White" Opacity="0">
+
+        		<es:Arc.RenderTransform>
+        			<TransformGroup>
+        				<ScaleTransform/>
+        				<SkewTransform/>
+        				<RotateTransform/>
+        				<TranslateTransform/>
+        			</TransformGroup>
+        		</es:Arc.RenderTransform>
+        	</es:Arc>
+        </Viewbox>
+    </Grid>
+</UserControl>

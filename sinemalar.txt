@@ -1,0 +1,63 @@
+http://www.sinemalar.com/json/mobile/playingMovies
+MovieID = 189517
+http://api.sinemalar.com/ajax/json/ios/v1/get/movie/189517/1/1
+gps'e göre en yakin sinema ve seanslar
+http://api.sinemalar.com/ajax/json/ios/v1/gps/seance/41.048960/28.981394/189517 
+
+cityID = 164
+http://api.sinemalar.com/ajax/json/ios/v1/get/theatreSeance/164/189517
+
+
+Yakindaki tiyatrolar
+http://api.sinemalar.com/ajax/json/ios/v1/gps/nearTheatre/41.048978/28.981330
+tiyatroda neler var
+http://api.sinemalar.com/ajax/json/ios/v1/get/theatre/1135
+http://api.sinemalar.com/ajax/json/ios/v1/get/movie/88256/1/1 
+http://api.sinemalar.com/ajax/json/ios/v1/gps/seance/41.049027/28.981174/88256 
+
+
+http://api.sinemalar.com/ajax/json/ios/v1/get/cities
+http://api.sinemalar.com/ajax/json/ios/v1/get/theatre/0/1/164/60
+http://api.sinemalar.com/ajax/json/ios/v1/get/theatre/362
+
+
+
+http://www.sinemalar.com/json/mobile/playingMoviesRemain
+
+
+
+http://www.sinemalar.com/mobile/gps.php?lat=41.049007&lng=28.981703&id=2a15682ac56fae6760e68aee4d83307b735f72cf
+
+
+http://prm.virgul.com/ad_mobile47.php
+
+filme göre seanslar sinemalar
+http://api.sinemalar.com/ajax/json/ios/v1/get/theatreSeance/164/14295
+
+film galerisi
+http://api.sinemalar.com/ajax/json/ios/v1/gallery/movie/14295
+artist gallery
+ http://api.sinemalar.com/ajax/json/ios/v1/gallery/artist/25927
+diger filmer
+http://www.sinemalar.com/json/mobile/playingMoviesRemain
+soon
+http://www.sinemalar.com/json/mobile/comingSoon
+
+
+
+
+http://api.sinemalar.com/ajax/json/ios/v1/gps/nearTheatre/41.0488868593472/28.98202484273
+
+en yakin oynadigi yer
+http://api.sinemalar.com/ajax/json/ios/v1/gps/seance/41.0488868593472/28.98202484273/14295
+
+
+yeni yakina girecek filmler ana ekrana getirilmeli.
+daha eski filmler için appbar'a ana ekranda dügme konmali.
+günlük olarak tüm api call'ler IsoStore'a cachelenmeli.
+geolocation bulunuyor yazilari konmali progresslere
+internet olmadigi senaryosu düsünülmeli.
+tüm reklam senaryolari iphone ile check edilmeli.
+
+Simdi! özelligi koysak? en yakin salonlarda 1 saat içinde ne filmler var? Yakinlik sirasina göre ve zaman sirasina göre listelese?
+
