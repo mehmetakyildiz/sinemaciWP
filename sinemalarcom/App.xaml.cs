@@ -6,6 +6,7 @@ using System.Windows.Markup;
 using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
+using System.Windows.Media;
 
 namespace sinemaci
 {
@@ -57,12 +58,28 @@ namespace sinemaci
         // This code will not execute when the application is reactivated
         private void Application_Launching(object sender, LaunchingEventArgs e)
         {
+            ChangeColors();
         }
 
+        private void ChangeColors()
+        {
+            //Visibility darkBackgroundVisibility =
+            //    (Visibility)Application.Current.Resources["PhoneDarkThemeVisibility"];
+
+            //if (darkBackgroundVisibility != Visibility.Visible)
+            //{
+            //    ((SolidColorBrush)Application.Current.Resources["AppBackgroundColor"]).Color = Color.FromArgb(255, 226, 212, 215);
+            //}
+            //else
+            //{
+            //    ((SolidColorBrush)Application.Current.Resources["AppBackgroundColor"]).Color = Color.FromArgb(255, 86, 5, 24);
+            //}
+        }
         // Code to execute when the application is activated (brought to foreground)
         // This code will not execute when the application is first launched
         private void Application_Activated(object sender, ActivatedEventArgs e)
         {
+            ChangeColors();
         }
 
         // Code to execute when the application is deactivated (sent to background)

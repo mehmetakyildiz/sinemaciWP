@@ -20,7 +20,7 @@
         <!--TitlePanel contains the name of the application and page title-->
 
         <!--ContentPanel - place additional content here-->
-        <maps:Map x:Name="myMap"/>
+        <maps:Map Loaded="myMap_Loaded" x:Name="myMap"/>
     </Grid>
 
 </phone:PhoneApplicationPage>

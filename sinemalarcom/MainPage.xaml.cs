@@ -23,7 +23,6 @@ namespace sinemaci
             InitializeComponent();
 
             loader.IsIndeterminate = true;
-            bannerClick.Tap += bannerClick_Tap;
             listBuHafta.SelectionChanged += listBuHafta_SelectionChanged;
             listGecenHafta.SelectionChanged += listGecenHafta_SelectionChanged;
             listSalonlar.SelectionChanged += listSalonlar_SelectionChanged;
@@ -56,56 +55,41 @@ namespace sinemaci
             }
         }
 
-        void bannerClick_Tap(object sender, System.Windows.Input.GestureEventArgs e)
-        {
-            var task = new WebBrowserTask();
-            task.Uri = new Uri(Reklam.Reklamlar.splash.clickUrl, UriKind.Absolute);
-            task.Show();
-        }
-
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
 
-            //Vizyondaki filmleri indir
-            Filmler filmler = new Filmler();
-            filmler.getCompleted += filmler_getCompleted;
-            filmler.get();
+            InitialDataBinding();
 
             //GPS lokasyonunu bul ki yakın sinemaları gösterelim.
             GeoCoordinateWatcher geoWatch = new GeoCoordinateWatcher(GeoPositionAccuracy.Default);
             geoWatch.MovementThreshold = 500;
             geoWatch.PositionChanged += geoWatch_PositionChanged;
             geoWatch.Start();
+        }
 
-            //reklam verisini de indirmeye başlayalım.
-            Reklam reklam = new Reklam();
-            reklam.getCompleted += reklam_getCompleted;
-            reklam.get();
+        void InitialDataBinding()
+        {
+            //Vizyondaki filmleri indir
+            Filmler filmler = new Filmler();
+            filmler.getCompleted += filmler_getCompleted;
+            filmler.get();
 
             listBuHafta.ItemsSource = filmler.buHafta;
             listGecenHafta.ItemsSource = filmler.gelecekHafta;
         }
 
-        void reklam_getCompleted(Reklam.RootObject data)
+        void PostGPSDetection_DataBinding()
         {
-            bannerBrowser.Navigated += bannerBrowser_Navigated;
-            bannerBrowser.Navigate(new Uri(data.vizyon.source, UriKind.Absolute));
-        }
-
-        void bannerBrowser_Navigated(object sender, NavigationEventArgs e)
-        {
-            bannerBrowser.Height = bannerBrowser.ActualWidth * 40.5 / 480;
-            bannerClick.Height = bannerBrowser.Height;
-            AppRoot.Margin = new Thickness(0, bannerBrowser.ActualHeight, 0, 0);
+            Salonlar yakinSalonlar = new Salonlar();
+            yakinSalonlar.getCompleted += yakinSalonlar_getCompleted;
+            yakinSalonlar.get(mevcutLokasyon.Latitude, mevcutLokasyon.Longitude);
         }
 
         void geoWatch_PositionChanged(object sender, GeoPositionChangedEventArgs<GeoCoordinate> e)
         {
             mevcutLokasyon = e.Position.Location;
-            Salonlar yakinSalonlar = new Salonlar();
-            yakinSalonlar.getCompleted += yakinSalonlar_getCompleted;
-            yakinSalonlar.get(e.Position.Location.Latitude, e.Position.Location.Longitude);
+            PostGPSDetection_DataBinding();
         }
 
         void yakinSalonlar_getCompleted(Salonlar sender)
@@ -123,6 +107,15 @@ namespace sinemaci
         private void barbtn_harita(object sender, EventArgs e)
         {
             NavigationService.Navigate(new Uri("/harita.xaml", UriKind.Relative));
+        }
+
+        private void barbtn_refresh(object sender, EventArgs e)
+        {
+            ApplicationBarIconButton source = (ApplicationBarIconButton)sender;
+            source.IsEnabled = false;
+            InitialDataBinding();
+            PostGPSDetection_DataBinding();
+            source.IsEnabled = true;
         }
     }
 }

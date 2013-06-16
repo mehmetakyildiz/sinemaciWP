@@ -87,5 +87,11 @@ namespace sinemaci
             }
 
         }
+
+        private void myMap_Loaded(object sender, RoutedEventArgs e)
+        {
+            Microsoft.Phone.Maps.MapsSettings.ApplicationContext.ApplicationId = "e91ac1cb-c942-4e8e-b5b7-f47bedcde677";
+            Microsoft.Phone.Maps.MapsSettings.ApplicationContext.AuthenticationToken = "25G0rLFz7kDMYOFEX0yGcg";
+        }
     }
 }

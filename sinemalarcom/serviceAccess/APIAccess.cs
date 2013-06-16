@@ -58,8 +58,7 @@ namespace sinemaci.serviceAccess.APIAccess
                 }
                 else
                 {
-                    throw ex;
-                    //System.Windows.MessageBox.Show("Can't connect! Try again later.");
+                    System.Windows.MessageBox.Show("Sinemalar.com'a bağlanılamıyor. Lütfen daha sonra tekrar deneyin.");
                     if (Error != null)
                     {
                         Error();

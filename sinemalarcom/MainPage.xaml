@@ -14,6 +14,48 @@
     shell:SystemTray.IsVisible="True" Background="#FF560518">
 
 	<phone:PhoneApplicationPage.Resources>
+		<Style x:Key="PanningTitleLayerStyle1" TargetType="Primitives:PanningTitleLayer">
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="Primitives:PanningTitleLayer">
+						<StackPanel x:Name="PanningStackPanel" Orientation="Horizontal">
+							<StackPanel.RenderTransform>
+								<TransformGroup>
+									<TranslateTransform x:Name="PanningTransform"/>
+									<TranslateTransform x:Name="LocalTransform"/>
+								</TransformGroup>
+							</StackPanel.RenderTransform>
+							<Border x:Name="LeftWraparound"/>
+							<ContentPresenter x:Name="ContentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Canvas.ZIndex="1">
+								<Image Height="336" Source="/Assets/Tiles/FlipCycleTileLarge.png" Stretch="Fill" Width="691"/>
+							</ContentPresenter>
+							<Border x:Name="RightWraparound"/>
+						</StackPanel>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+		</Style>
+		<Style x:Key="PanningTitleLayerStyle2" TargetType="Primitives:PanningTitleLayer">
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="Primitives:PanningTitleLayer">
+						<StackPanel x:Name="PanningStackPanel" Orientation="Horizontal">
+							<StackPanel.RenderTransform>
+								<TransformGroup>
+									<TranslateTransform x:Name="PanningTransform"/>
+									<TranslateTransform x:Name="LocalTransform"/>
+								</TransformGroup>
+							</StackPanel.RenderTransform>
+							<Border x:Name="LeftWraparound"/>
+							<ContentPresenter x:Name="ContentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Canvas.ZIndex="1">
+								<Image Source="/Assets/big_logo.png" Stretch="None"/>
+							</ContentPresenter>
+							<Border x:Name="RightWraparound"/>
+						</StackPanel>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+		</Style>
 		<ControlTemplate x:Key="myPanoramaTemplate" TargetType="phone:Panorama">
 			<Grid>
 				<Grid.RowDefinitions>
@@ -25,9 +67,7 @@
 					<Border x:Name="background" Background="{TemplateBinding Background}" />
 				</Primitives:PanningBackgroundLayer>
 
-				<Primitives:PanningTitleLayer x:Name="TitleLayer" Grid.Row="0" HorizontalAlignment="Left"  Margin="10,-34,0,0"
-					Content="{TemplateBinding Title}" ContentTemplate="{TemplateBinding TitleTemplate}"
-					FontSize="133.333" FontFamily="{StaticResource PhoneFontFamilyLight}" CharacterSpacing="-35" />
+				<Primitives:PanningTitleLayer x:Name="TitleLayer" Grid.Row="0" HorizontalAlignment="Left"  Margin="10,-14,0,-20" Style="{StaticResource PanningTitleLayerStyle2}" />
 
 				<Primitives:PanningLayer x:Name="ItemsLayer" Grid.Row="1" HorizontalAlignment="Left">
 					<ItemsPresenter x:Name="items"/>
@@ -125,9 +165,9 @@
 	<phone:PhoneApplicationPage.Foreground>
 		<StaticResource ResourceKey="PhoneForegroundBrush"/>
 	</phone:PhoneApplicationPage.Foreground>
-	<Grid x:Name="LayoutRoot" Background="{StaticResource AppBackgroundColor}">
+	<Grid x:Name="LayoutRoot">
 		<Grid x:Name="AppRoot">
-			<phone:Panorama x:Name="PanoramaRoot" Title="sinemacı" Template="{StaticResource myPanoramaTemplate}">
+			<phone:Panorama x:Name="PanoramaRoot" Title="sinemaci" Template="{StaticResource myPanoramaTemplate}">
 				<phone:PanoramaItem x:Name="pItem1" CacheMode="{x:Null}" Header="bu hafta" Style="{StaticResource myPanoramaItemStyle}">
 					<phone:PanoramaItem.RenderTransform>
 						<TranslateTransform/>
@@ -218,18 +258,12 @@
 			</phone:Panorama>
 			<ProgressBar x:Name="loader" Height="10" VerticalAlignment="Top" Foreground="#FFFF1600"/>
 		</Grid>
-		<phone:WebBrowser x:Name="bannerBrowser" VerticalAlignment="Top" Height="0" IsScriptEnabled="True" Base="_blank"/>
-		<Rectangle x:Name="bannerClick" Fill="#00F4F4F5" Height="0" VerticalAlignment="Top"/>
 </Grid>
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True" Mode="Minimized" Opacity="1" >
 
             <shell:ApplicationBarIconButton  IconUri="/Assets/appbaricons/map_icon.png" Text="harita" Click="barbtn_harita" />
-
-            <shell:ApplicationBar.MenuItems>
-                <shell:ApplicationBarMenuItem Text="get default size value"/>
-                <shell:ApplicationBarMenuItem Text="get mini size value" />
-            </shell:ApplicationBar.MenuItems>
+            <shell:ApplicationBarIconButton  IconUri="/Assets/appbaricons/refresh.png" Text="yenile" Click="barbtn_refresh" />
 
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>

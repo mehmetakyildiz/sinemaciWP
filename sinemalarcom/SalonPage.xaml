@@ -141,7 +141,7 @@
 	</phone:PhoneApplicationPage.Foreground>
 
     <!--LayoutRoot is the root grid where all page content is placed-->
-    <Grid x:Name="LayoutRoot" Background="{StaticResource AppBackgroundColor}">
+    <Grid x:Name="LayoutRoot">
 
         <phone:Panorama x:Name="PanoramaRoot" Title="sinemacı" Template="{StaticResource myPanoramaTemplate}">
     		<phone:PanoramaItem x:Name="pItem1" CacheMode="{x:Null}" Header="salon hakkında" Style="{StaticResource myPanoramaItemStyle}">
@@ -156,7 +156,7 @@
     					<TextBlock TextWrapping="Wrap" Text="{Binding phone}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
     				</StackPanel>
     				<Grid Height="400" Margin="10,10,10,0">
-    					<maps:Map x:Name="myMap" Width="400" IsHitTestVisible="False"/>
+    					<maps:Map Loaded="myMap_Loaded" x:Name="myMap" Width="400" IsHitTestVisible="False"/>
     					<Rectangle x:Name="recMap" Fill="#00000000"/>
     				</Grid>
     			</StackPanel>

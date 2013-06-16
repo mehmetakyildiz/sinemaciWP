@@ -24,8 +24,17 @@ namespace sinemaci.entities
         public void get()
         {
             GetRequest<RootObject> Req = new GetRequest<RootObject>();
+            Req.Error += Req_Error;
             Req.Completed += Req_Completed;
             Req.Download(APIuris.Filmler);
+        }
+
+        void Req_Error()
+        {
+            if (getCompleted != null)
+            {
+                getCompleted();
+            }
         }
 
         void Req_Completed(Filmler.RootObject deserialized)

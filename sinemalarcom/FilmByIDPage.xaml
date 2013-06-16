@@ -185,7 +185,7 @@
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>
 
-	<Grid x:Name="LayoutRoot" Background="{StaticResource AppBackgroundColor}">
+	<Grid x:Name="LayoutRoot">
 		<phone:Panorama x:Name="PanoramaRoot" Title=" " Template="{StaticResource myPanoramaTemplate}" Margin="0">
 			<phone:PanoramaItem x:Name="pItem1" CacheMode="{x:Null}" Header="film hakkında" Style="{StaticResource myPanoramaItemStyle}">
 				<phone:PanoramaItem.RenderTransform>

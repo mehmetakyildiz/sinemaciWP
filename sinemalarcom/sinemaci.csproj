@@ -24,7 +24,7 @@
     <ValidateXaml>true</ValidateXaml>
     <MinimumVisualStudioVersion>11.0</MinimumVisualStudioVersion>
     <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
-    <ExpressionBlendVersion>5.0.31017.0</ExpressionBlendVersion>
+    <ExpressionBlendVersion>5.0.40218.0</ExpressionBlendVersion>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
     <SccAuxPath>SAK</SccAuxPath>
@@ -107,7 +107,6 @@
     <Compile Include="serviceAccess\CacheStore.cs" />
     <Compile Include="entities\MoviePhotos.cs" />
     <Compile Include="entities\Film.cs" />
-    <Compile Include="entities\Reklam.cs" />
     <Compile Include="entities\Salonlar.cs" />
     <Compile Include="entities\Filmler.cs" />
     <Compile Include="entities\SalonVeSeans.cs" />
@@ -189,11 +188,13 @@
     <Content Include="Assets\appbaricons\mappin_red.png" />
     <Content Include="Assets\appbaricons\map_icon.png" />
     <Content Include="Assets\appbaricons\photos.png" />
+    <Content Include="Assets\appbaricons\refresh.png" />
     <Content Include="Assets\appbaricons\save.png" />
     <Content Include="Assets\appbaricons\share.png" />
     <Content Include="Assets\ApplicationIcon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\big_logo.png" />
     <Content Include="Assets\Tiles\FlipCycleTileLarge.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -221,6 +222,13 @@
     </Reference>
     <Reference Include="System.Windows.Interactivity" />
   </ItemGroup>
+  <ItemGroup>
+    <BlendEmbeddedFont Include="Fonts\andyb.ttf">
+      <IsSystemFont>True</IsSystemFont>
+      <All>True</All>
+      <AutoFill>True</AutoFill>
+    </BlendEmbeddedFont>
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).$(TargetFrameworkVersion).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
@@ -231,4 +239,5 @@
   </Target>
   -->
   <ProjectExtensions />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\Expression\Blend\WindowsPhone\v8.0\Microsoft.Expression.Blend.WindowsPhone.targets" />
 </Project>

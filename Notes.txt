@@ -35,12 +35,11 @@ en yakin oynadigi yer
 http://api.sinemalar.com/ajax/json/ios/v1/gps/seance/41.0488868593472/28.98202484273/14295
 
 
-yeni yakina girecek filmler ana ekrana getirilmeli.
+yeni yayina girecek filmler ana ekrana getirilmeli.
 daha eski filmler için appbar'a ana ekranda dügme konmali.
 günlük olarak tüm api call'ler IsoStore'a cachelenmeli.
 geolocation bulunuyor yazilari konmali progresslere
 internet olmadigi senaryosu düsünülmeli.
-tüm reklam senaryolari iphone ile check edilmeli.
 
 Simdi! özelligi koysak? en yakin salonlarda 1 saat içinde ne filmler var? Yakinlik sirasina göre ve zaman sirasina göre listelese?
 
